@@ -6,7 +6,7 @@ MODEL_PATH = '../Output/AudioEmotion.model'
 
 def train():
     # Load the audio data and meta data.
-    data = tc.load_audio('./Audio')
+    data = tc.load_audio('../AudioData')
 
     # Join the audio data and the meta data.
     emotions = 'neutral calm happy sad angry fearful disgust surprised'.split()
