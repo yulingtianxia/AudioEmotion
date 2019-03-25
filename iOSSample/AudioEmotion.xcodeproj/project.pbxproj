@@ -18,6 +18,7 @@
 		A4C0809F224785AC00C87136 /* libAudioPreprocessing.dylib in Resources */ = {isa = PBXBuildFile; fileRef = A4C0809A2247854600C87136 /* libAudioPreprocessing.dylib */; };
 		A4C080A12247894500C87136 /* PredictAudioEmotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C080A02247894500C87136 /* PredictAudioEmotion.swift */; };
 		A4C080A522478B6F00C87136 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C080A422478B6F00C87136 /* AudioRecorder.swift */; };
+		A4C161712248F038008546D1 /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C161702248F038008546D1 /* RecordButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -46,6 +47,7 @@
 		A4C0809A2247854600C87136 /* libAudioPreprocessing.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libAudioPreprocessing.dylib; sourceTree = "<group>"; };
 		A4C080A02247894500C87136 /* PredictAudioEmotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictAudioEmotion.swift; sourceTree = "<group>"; };
 		A4C080A422478B6F00C87136 /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
+		A4C161702248F038008546D1 /* RecordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 				A4C080862247800600C87136 /* AppDelegate.swift */,
 				A4C080882247800600C87136 /* ViewController.swift */,
 				A4C080A422478B6F00C87136 /* AudioRecorder.swift */,
+				A4C161702248F038008546D1 /* RecordButton.swift */,
 				A4C080A02247894500C87136 /* PredictAudioEmotion.swift */,
 				A4C0808A2247800600C87136 /* Main.storyboard */,
 				A4C0808D2247800900C87136 /* Assets.xcassets */,
@@ -176,6 +179,7 @@
 			files = (
 				A4C080A12247894500C87136 /* PredictAudioEmotion.swift in Sources */,
 				A4C080A522478B6F00C87136 /* AudioRecorder.swift in Sources */,
+				A4C161712248F038008546D1 /* RecordButton.swift in Sources */,
 				A4C080892247800600C87136 /* ViewController.swift in Sources */,
 				A4C080872247800600C87136 /* AppDelegate.swift in Sources */,
 				A4C080992247810300C87136 /* AudioEmotion.mlmodel in Sources */,
@@ -328,6 +332,7 @@
 				DEVELOPMENT_TEAM = D3RCVUP6VH;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = AudioEmotion/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -338,7 +343,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yulingtianxia.AudioEmotion;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -351,6 +356,7 @@
 				DEVELOPMENT_TEAM = D3RCVUP6VH;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = AudioEmotion/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -361,7 +367,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yulingtianxia.AudioEmotion;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

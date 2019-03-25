@@ -16,7 +16,7 @@ def train():
     train_set, test_set = data.random_split(0.8)
 
     # Create the model.
-    model = tc.sound_classifier.create(train_set, target='label', feature='audio', batch_size=1024, max_iterations=100)
+    model = tc.sound_classifier.create(train_set, target='label', feature='audio', batch_size=256, max_iterations=50)
 
     # Evaluate the model and print the results
     metrics = model.evaluate(test_set)

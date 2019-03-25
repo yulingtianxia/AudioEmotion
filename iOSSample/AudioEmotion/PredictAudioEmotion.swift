@@ -13,39 +13,49 @@ import CoreML
 class PredictAudioEmotion: NSObject {
     let model = AudioEmotion()
     
-    func predictAudio(audio fileURL: URL) -> [Dictionary<String, Double>] {
+    func predictAudio(audio fileURL: URL) -> [Dictionary<String, Double>]? {
         // Read wav file
-        var wavFile:AVAudioFile!
+        let wavFile:AVAudioFile
+        
         do {
             wavFile = try AVAudioFile(forReading:fileURL)
         } catch {
-            fatalError("Could not open wav file.")
+            print("Could not open wav file. \(error.localizedDescription)")
+            return nil
         }
         
         print("wav file length: \(wavFile.length)")
         assert(wavFile.fileFormat.sampleRate==16000.0, "Sample rate is not right!")
         
-        let buffer = AVAudioPCMBuffer(pcmFormat: wavFile.processingFormat, frameCapacity: UInt32(wavFile.length))
-        do {
-            try wavFile.read(into:buffer!)
-        } catch{
-            fatalError("Error reading buffer.")
+        guard let buffer = AVAudioPCMBuffer(pcmFormat: wavFile.processingFormat, frameCapacity: UInt32(wavFile.length)) else {
+            print("Create PCMBuffer failed.")
+            return nil
         }
-        guard let bufferData = buffer?.floatChannelData else {
-            fatalError("Can not get a float handle to buffer")
+        
+        do {
+            try wavFile.read(into:buffer)
+        } catch {
+            print("Error reading buffer. \(error.localizedDescription)")
+            return nil
+        }
+        
+        guard let bufferData = buffer.floatChannelData else {
+            print("Can not get a float handle to buffer")
+            return nil
         }
         
         // Chunk data and set to CoreML model
         let windowSize = 15600
         guard let audioData = try? MLMultiArray(shape:[windowSize as NSNumber], dataType:MLMultiArrayDataType.float32) else {
-            fatalError("Can not create MLMultiArray")
+            print("Can not create MLMultiArray")
+            return nil
         }
         
         // Ignore any partial window at the end.
-        var windowNumber = 0
         var results = [Dictionary<String, Double>]()
-        while ((windowNumber+1) * windowSize) <= (wavFile.length - Int64(windowSize)) {
-            let offset = windowNumber * windowSize
+        let windowNumber = wavFile.length / Int64(windowSize)
+        for windowIndex in 0..<Int(windowNumber) {
+            let offset = windowIndex * windowSize
             for i in 0...windowSize {
                 audioData[i] = NSNumber.init(value: bufferData[0][offset + i])
             }
@@ -55,7 +65,6 @@ class PredictAudioEmotion: NSObject {
                 fatalError("Error calling predict")
             }
             results.append(modelOutput.labelProbability)
-            windowNumber += 1
         }
         return results
     }
@@ -79,7 +88,7 @@ class PredictAudioEmotion: NSObject {
         }
         
         let most_probable_label = max_sum_label
-        let probability = max_sum / Double(prob_sums.count)
+        let probability = max_sum / Double(results.count)
         print("\(most_probable_label) predicted, with probability: \(probability)")
         return (most_probable_label, probability)
     }

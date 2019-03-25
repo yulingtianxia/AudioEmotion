@@ -49,7 +49,7 @@ def train():
     model.fit(x_train,
               y_train,
               epochs=1000,
-              batch_size=1024,
+              batch_size=1000,
               validation_split=0.2,
               callbacks=[checkpointer])
     results = model.evaluate(x_test, y_test)
