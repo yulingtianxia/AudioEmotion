@@ -510,25 +510,38 @@ class SoundClassifier(_CustomModel):
 
             ctx = _mxnet_utils.get_mxnet_context()[0]
             input_name, output_name = input_name, 0
+            import mxnet as _mx
             for i, cur_layer in enumerate(self._custom_classifier):
-                W = cur_layer.weight.data(ctx).asnumpy()
-                nC, nB = W.shape
-                Wb = cur_layer.bias.data(ctx).asnumpy()
+                output_name = str(i)
+                if type(cur_layer) == _mx.gluon.nn.basic_layers.Dense:
+                    W = cur_layer.weight.data(ctx).asnumpy()
+                    nC, nB = W.shape
+                    Wb = cur_layer.bias.data(ctx).asnumpy()
 
-                builder.add_inner_product(name="inner_product_"+str(i),
-                                          W=W,
-                                          b=Wb,
-                                          input_channels=nB,
-                                          output_channels=nC,
-                                          has_bias=True,
-                                          input_name=str(input_name),
-                                          output_name='inner_product_'+str(output_name))
-
-                if cur_layer.act:
-                    builder.add_activation("activation"+str(i), 'RELU', 'inner_product_'+str(output_name), str(output_name))
-
-                input_name = i
-                output_name = i + 1
+                    builder.add_inner_product(name='inner_product_'+str(i),
+                                              W=W,
+                                              b=Wb,
+                                              input_channels=nB,
+                                              output_channels=nC,
+                                              has_bias=True,
+                                              input_name=input_name,
+                                              output_name='inner_product_'+output_name)
+                    if cur_layer.act:
+                        builder.add_activation("activation"+str(i), 'RELU', 'inner_product_'+output_name, output_name)
+                elif type(cur_layer) == _mx.gluon.nn.basic_layers.BatchNorm:
+                    zeros = _np.zeros(nC)
+                    ones = _np.ones(nC)
+                    builder.add_batchnorm(name='bn_layer_'+str(i),
+                                          channels=nC,
+                                          gamma=ones,
+                                          beta=zeros,
+                                          mean=zeros,
+                                          variance=ones,
+                                          input_name=input_name,
+                                          output_name=output_name)
+                elif type(cur_layer) == _mx.gluon.nn.basic_layers.Dropout:
+                    continue
+                input_name = output_name
 
             last_output = builder.spec.neuralNetworkClassifier.layers[-1].output[0]
             builder.add_softmax('softmax', last_output, self.target)

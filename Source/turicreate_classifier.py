@@ -1,5 +1,6 @@
 import turicreate as tc
 from os.path import basename
+import time
 
 MODEL_PATH = '../Output/AudioEmotion.model'
 
@@ -16,11 +17,25 @@ def train():
     train_set, test_set = data.random_split(0.8)
 
     # Create the model.
-    model = tc.sound_classifier.create(train_set, target='label', feature='audio', batch_size=256, max_iterations=50)
+    batch_size = 512
+    max_iterations = 3000
+    model = tc.sound_classifier.create(train_set,
+                                       target='label',
+                                       feature='audio',
+                                       batch_size=batch_size,
+                                       max_iterations=max_iterations)
 
     # Evaluate the model and print the results
     metrics = model.evaluate(test_set)
     print(metrics)
+
+    format_string = "%Y-%m-%d %H:%M:%S"
+    time_stamp = int(time.time())
+    time_array = time.localtime(time_stamp)
+    str_date = time.strftime(format_string, time_array)
+    fo = open(f'../Output/logs/batch_size_{batch_size}-max_iterations_{max_iterations}-{str_date}.txt', 'x')
+    fo.write(str(metrics))
+    fo.close()
 
     # Save the model for later use in Turi Create
     model.save(MODEL_PATH)
