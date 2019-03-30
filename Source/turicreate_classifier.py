@@ -9,6 +9,9 @@ def train():
     # Load the audio data and meta data.
     data = tc.load_audio('../AudioData')
 
+    # Calculate the deep features just once.
+    data['deep_features'] = tc.sound_classifier.get_deep_features(data['audio'])
+
     # Join the audio data and the meta data.
     emotions = 'neutral calm happy sad angry fearful disgust surprised'.split()
     data['label'] = data['path'].apply(lambda p: emotions[int(basename(p).split('-')[2]) - 1])
@@ -21,7 +24,7 @@ def train():
     max_iterations = 3000
     model = tc.sound_classifier.create(train_set,
                                        target='label',
-                                       feature='audio',
+                                       feature='deep_features',
                                        batch_size=batch_size,
                                        max_iterations=max_iterations)
 
