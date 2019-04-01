@@ -20,8 +20,8 @@ def train():
     train_set, test_set = data.random_split(0.8)
 
     # Create the model.
-    batch_size = 512
-    max_iterations = 3000
+    batch_size = 1024
+    max_iterations = 5000
     model = tc.sound_classifier.create(train_set,
                                        target='label',
                                        feature='deep_features',
@@ -44,7 +44,7 @@ def train():
     model.save(MODEL_PATH)
 
     # Export for use in Core ML
-    model.export_coreml('../Output/AudioEmotion.mlmodel')
+    model.export_coreml(f'../Output/mlmodels/AudioEmotion_{str_date}.mlmodel')
 
 
 def predict(audio):
