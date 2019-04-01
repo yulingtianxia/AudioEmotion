@@ -10,7 +10,7 @@ Eight emotions: neutral, calm, happy, sad, angry, fearful, disgust and surprised
 
 ## Usage
 
-Create "AudioData", "Output/logs" folders.
+Create "AudioData", "Output/logs", "Output/mlmodels" folders.
 Download RAVDESS dataset and put it in "AudioData" folder. 
 
 ### Turicreate
