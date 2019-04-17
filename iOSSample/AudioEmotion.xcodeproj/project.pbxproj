@@ -137,6 +137,7 @@
 				TargetAttributes = {
 					A4C080822247800600C87136 = {
 						CreatedOnToolsVersion = 10.2;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -343,7 +344,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yulingtianxia.AudioEmotion;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "arm64 arm64e";
 			};
@@ -368,7 +369,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yulingtianxia.AudioEmotion;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "arm64 arm64e";
 			};

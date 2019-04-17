@@ -59,7 +59,7 @@ class PredictAudioEmotion: NSObject {
             for i in 0...windowSize {
                 audioData[i] = NSNumber.init(value: bufferData[0][offset + i])
             }
-            let modelInput = AudioEmotionInput(audio: audioData)
+            let modelInput = AudioEmotionInput(deep_features: audioData)
             
             guard let modelOutput = try? model.prediction(input: modelInput) else {
                 fatalError("Error calling predict")
