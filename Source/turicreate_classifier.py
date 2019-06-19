@@ -20,11 +20,12 @@ def train():
     train_set, test_set = data.random_split(0.8)
 
     # Create the model.
-    batch_size = 1024
-    max_iterations = 5000
+    batch_size = 128
+    max_iterations = 100
     model = tc.sound_classifier.create(train_set,
                                        target='label',
                                        feature='deep_features',
+                                       custom_layer_sizes=[512, 256, 128],
                                        batch_size=batch_size,
                                        max_iterations=max_iterations)
 
