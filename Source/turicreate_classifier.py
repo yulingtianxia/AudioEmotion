@@ -51,6 +51,7 @@ def train():
 def predict(audio):
     model = tc.load_model(MODEL_PATH)
     data = tc.load_audio(audio)
+    data['deep_features'] = tc.sound_classifier.get_deep_features(data['audio'])
     predictions = model.predict(data, 'probability_vector')
     return predictions
 
